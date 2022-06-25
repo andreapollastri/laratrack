@@ -1,4 +1,4 @@
-## LARATRACK
+## LARATRACK (not ready for production)
 
 #### About
 Laratrack is a Laravel based Error Tracking Tool for your projects. It's easy to install and use! ;)
@@ -39,3 +39,9 @@ LARATRACK_APIKEY_DEV= #prod key (3 days of log retation - no mail notifications)
 LARATRACK_API_KEY=#TheSameKeyOfYourMainProject(Dev or Prod)
 LARATRACK_ENDPOINT=#TheMainProjectUrl/data
 ```
+
+#### Roadmap
+- Business Logic Fix
+- Client Fix
+- Upgrate to Laravel 9
+- Improvements
