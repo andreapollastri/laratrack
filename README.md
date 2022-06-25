@@ -16,7 +16,7 @@ Laratrack is a Laravel based Error Tracking Tool for your projects. It's easy to
 - admin@admin.com / password
 
 #### Getting Started
-- Add sha1 based API keys into your .env file: 'LARATRACK_APIKEY_PROD' and 
+- Add sha1 based API keys into your .env file:
 ```
 LARATRACK_APIKEY_PROD= #prod key (90 days of log retation - 1h mail notifications for each error type)
 LARATRACK_APIKEY_DEV= #prod key (3 days of log retation - no mail notifications)
