@@ -10,7 +10,8 @@ class ErrorMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-  	public $details;
+    public $details;
+
     /**
      * Create a new message instance.
      *

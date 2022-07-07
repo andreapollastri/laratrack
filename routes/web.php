@@ -35,6 +35,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/data/{code}', function ()
     $page .= 'var str = JSON.stringify(obj, undefined, 4);';
     $page .= 'output(str);';
     $page .= '</script></html>';
+
     return $page;
 });
 
@@ -43,7 +44,7 @@ Route::post('/data', function () {
     // PROD ENV LOGS TWO TYPES OF ERRORS... 404 AND GENERIC ERRORS
     // THAN SENDS EMAILS WITH TWO DIFFERENT TRIGGERS (3 TIMES FOR 404, FIRST TIMES FOR GENERIC ERRORS)
     // LOGS RETANTION IS SET TO 90 DAYS
-    if(request()->header('apikey') == config('app.apikeyprod')) {
+    if (request()->header('apikey') == config('app.apikeyprod')) {
 
         // 404 / ERROR SWICH TO POPULATE DATABASE DIFFERENTLY
         switch (request()->header('type')) {
@@ -82,11 +83,10 @@ Route::post('/data', function () {
         // COUNT HOW MANY SIMILAR ERRORS OCCOURED IN LAST HOUR (THANKS TO date('YmdH') in $errorCheck)
         $count = \App\Models\Log::where('error_check', $errorCheck)->count();
 
-
         // 404 / ERROR SWICH WITH TWO DIFFERENT MAIL TRIGGERS AND CONTENT
         switch (request()->header('type')) {
             case 'not-found':
-                if($count == 3) {
+                if ($count == 3) {
                     $details = [
                         'error' => $code,
                         'title' => 'Error 404 @ '.request()->input('url'),
@@ -97,11 +97,11 @@ Route::post('/data', function () {
                 break;
 
             default:
-                if($count < 2) {
+                if ($count < 2) {
                     $details = [
                         'error' => $code,
                         'title' => 'Exception @ '.request()->input('url'),
-                        'body' => request()->input('error').' in ...'.substr(request()->input('file'), -16).':'.request()->input('line')
+                        'body' => request()->input('error').' in ...'.substr(request()->input('file'), -16).':'.request()->input('line'),
                     ];
                     Mail::to(\App\Models\User::first()->email)->send(new \App\Mail\ErrorMail($details));
                 }
@@ -112,14 +112,14 @@ Route::post('/data', function () {
         $date = new DateTime;
         $date->modify('-90 days');
         $formatted = $date->format('Y-m-d H:i:s');
-        \App\Models\Log::where('datetime','<=', $formatted)->delete();
+        \App\Models\Log::where('datetime', '<=', $formatted)->delete();
 
         return $code;
     }
 
     // DEV ENV DOES NOT NEED LOG 404 ERRORS, JUST GENERIC ERRORS AND DOES NOT SEND EMAILS
     // LOGS RETANTION IS SET TO 3 DAYS
-    if(request()->header('apikey') == config('app.apikeydev') && request()->header('type') == 'error') {
+    if (request()->header('apikey') == config('app.apikeydev') && request()->header('type') == 'error') {
 
         // ERROR CODE
         $code = 'dev-'.uniqid();
@@ -145,7 +145,7 @@ Route::post('/data', function () {
         $date = new DateTime;
         $date->modify('-3 days');
         $formatted = $date->format('Y-m-d H:i:s');
-        \App\Models\Log::where('datetime','<=', $formatted)->delete();
+        \App\Models\Log::where('datetime', '<=', $formatted)->delete();
 
         return $code;
     }
