@@ -43,5 +43,4 @@ LARATRACK_ENDPOINT=#TheMainProjectUrl/data
 #### Roadmap
 - Business Logic Fix
 - Client Fix
-- Upgrate to Laravel 9
 - Improvements
