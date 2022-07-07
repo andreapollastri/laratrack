@@ -19,7 +19,8 @@ class Log extends Model
         'ip',
         'user_agent',
         'user_id',
-        'error_check'
+        'error_check',
     ];
+
     public $timestamps = false;
 }
